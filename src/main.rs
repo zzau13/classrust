@@ -74,18 +74,17 @@ macro_rules! foo {
     ($_self:ident) => {};
 }
 
-struct FooFut {
-    max: usize,
+struct FooFut<const MAX: usize> {
     state: String,
     // whats need here?
     channel: Sender<()>,
 }
 
-impl Future for FooFut {
+impl<const MAX: usize> Future for FooFut<MAX> {
     type Output = usize;
 
     fn poll(mut self: Pin<&mut Self>, cx: &mut Context<'_>) -> Poll<Self::Output> {
-        if self.state.len() == self.max {
+        if self.state.len() == MAX {
             return Poll::Ready(self.state.len());
         }
         println!("step {}", self.state);
@@ -141,10 +140,9 @@ fn main() {
     // });
     // println!(
     //     "Future {}",
-    //     futures::executor::block_on(FooFut {
+    //     futures::executor::block_on(FooFut::<10> {
     //         state: String::new(),
     //         channel: tx,
-    //         max: 10
     //     })
     // );
     //
