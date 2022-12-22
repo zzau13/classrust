@@ -130,11 +130,10 @@ fn main() {
 
     // Async
     // let (tx, rx) = channel::<()>();
-    // std::thread::spawn(move || loop {
+    // let th2 = std::thread::spawn(move || loop {
     //     std::thread::sleep(std::time::Duration::from_millis(100));
     //     match rx.recv() {
-    //         Ok(_waiter) => {
-    //         }
+    //         Ok(_waiter) => {}
     //         Err(_) => {
     //             break;
     //         }
@@ -148,4 +147,6 @@ fn main() {
     //         max: 10
     //     })
     // );
+    //
+    // th2.join().expect("thread 2 join correctly");
 }
